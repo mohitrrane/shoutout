@@ -10,11 +10,37 @@ const Stack = createStackNavigator()
 
 const GameStack = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Start" component={StartScreen} />
-            <Stack.Screen name="Join" component={JoinScreen} />
-            <Stack.Screen name="GamePlay" component={GamePlayScreen} />
+        <Stack.Navigator
+            initialRouteName='Home'
+        >
+            <Stack.Screen 
+                name="Home" 
+                component={HomeScreen} 
+                options={{ 
+                    title: 'Home' 
+                }}
+            />
+            <Stack.Screen 
+                name="Start" 
+                component={StartScreen} 
+                options={{ 
+                    title: 'Start Game' 
+                }}
+            />
+            <Stack.Screen 
+                name="Join" 
+                component={JoinScreen} 
+                options={{ 
+                    title: 'Join Game' 
+                  }}
+            />
+            <Stack.Screen 
+                name="GamePlay" 
+                component={GamePlayScreen} 
+                options={{ 
+                    title: 'GamePlay' 
+                }}
+            />
         </Stack.Navigator>
     )
 }

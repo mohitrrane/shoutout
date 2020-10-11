@@ -11,9 +11,23 @@ const Stack = createStackNavigator()
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="LoginStack" component={LoginStack} />
-        <Stack.Screen name="MainTab" component={MainTabStack} />
+      <Stack.Navigator
+        initialRouteName="LoginStack"
+      >
+        <Stack.Screen 
+          name="LoginStack" 
+          component={LoginStack}
+          options={{ 
+            title: 'Login' 
+          }} 
+        />
+        <Stack.Screen 
+          name="MainTab" 
+          component={MainTabStack} 
+          options={{ 
+            title: 'ShoutOut' 
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
