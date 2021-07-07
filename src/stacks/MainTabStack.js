@@ -1,42 +1,71 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, {useEffect} from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import GameStack from './GameStack'
-import ProfileScreen from '../screens/ProfileScreen'
-import NotificationsScreen from '../screens/NotificationsScreen'
-import SettingsScreen from '../screens/SettingsScreen'
+import ProfileStack from '../stacks/ProfileStack'
+import InfoStack from './InfoStack'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { setUserToken, setUserProfile } from '../../redux/user/userActions'
+import { useDispatch } from 'react-redux'
+import { getUserProfile, getUserToken } from '../helpers/userFunctions';
 
 const Tab = createBottomTabNavigator()
 
-const MainTabStack = () => {
+const MainTabStack = (props) => {
+    const reduxDispatch = useDispatch()
+
+    useEffect(() => {
+        getUserToken()
+        .then(token=>{
+            reduxDispatch(setUserToken(token))
+        })
+        getUserProfile()
+        .then(profile=>{
+            reduxDispatch(setUserProfile(profile))
+        })        
+    }, [])
+
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            screenOptions={({route})=>({
+                tabBarIcon: ({focused, color, size})=>{
+                    let iconName;
+
+                    if (route.name === 'Home') {
+                        iconName = focused ? 'ios-home' : 'ios-home';
+                    } else if (route.name === 'Profile') {
+                        iconName = focused ? 'ios-person' : 'ios-person';
+                    } else if (route.name === 'Info') {
+                        iconName = focused ? 'ios-list' : 'ios-list';
+                    }
+
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                }
+            })}
+        >
             <Tab.Screen 
-                name="GameStack" 
+                name="Home" 
                 component={GameStack} 
                 options={{ 
                     title: 'Home' 
                 }}
             />
-            <Tab.Screen 
-                name="Notifications" 
-                component={NotificationsScreen} 
-                options={{ 
-                    title: 'Notifications' 
-                }}
-            />
+            
             <Tab.Screen 
                 name="Profile" 
-                component={ProfileScreen} 
+                component={ProfileStack} 
                 options={{ 
                     title: 'Profile' 
                 }}
+                afterLoggedOut={()=>{props.afterLoggedOut()}}
             />
             <Tab.Screen 
-                name="Settings" 
-                component={SettingsScreen} 
+                name="Info" 
+                component={InfoStack} 
                 options={{ 
-                    title: 'Settings' 
+                    title: 'Info' 
+                }}
+                screenOptions={{
+                    title: 'Info'
                 }}
             />
         </Tab.Navigator>

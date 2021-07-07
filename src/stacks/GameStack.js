@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import HomeScreen from '../screens/HomeScreen'
 import StartScreen from '../screens/StartScreen'
 import JoinScreen from '../screens/JoinScreen'
+import WaitingScreen from '../screens/WaitingScreen'
 import GamePlayScreen from '../screens/GamePlayScreen'
 
 const Stack = createStackNavigator()
@@ -12,6 +12,16 @@ const GameStack = () => {
     return (
         <Stack.Navigator
             initialRouteName='Home'
+            screenOptions={{
+                headerStyle: {
+                  backgroundColor: '#83AF9B',
+                },
+                headerTitleAlign: 'Center',
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+            }}
         >
             <Stack.Screen 
                 name="Home" 
@@ -32,6 +42,13 @@ const GameStack = () => {
                 component={JoinScreen} 
                 options={{ 
                     title: 'Join Game' 
+                  }}
+            />
+            <Stack.Screen 
+                name="Waiting" 
+                component={WaitingScreen} 
+                options={{ 
+                    title: 'Waiting to join' 
                   }}
             />
             <Stack.Screen 

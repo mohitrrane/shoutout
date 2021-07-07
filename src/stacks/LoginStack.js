@@ -6,7 +6,7 @@ import RegisterScreen from '../screens/RegisterScreen'
 
 const Stack = createStackNavigator()
 
-const LoginStack = () => {
+const LoginStack = (props) => {
     return (
         <Stack.Navigator
             initialRouteName="Login"
